@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>About | Bluetide Hotel</title>
+<meta name="description" content="The story, team, daily schedule and policies of Bluetide Hotel.">
+<!-- Bootstrap 5.3 + our theme, compiled from scss/main.scss (Practicals 1, 23, 24) -->
+<link rel="stylesheet" href="assets/css/main.css">
+<!-- Bootstrap Icons (the Bootstrap 5 replacement for Glyphicons) -->
+<link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.min.css">
+</head>
+<body class="d-flex flex-column min-vh-100" data-bs-spy="scroll" data-bs-target="#aboutNav" data-bs-root-margin="0px 0px -55%" tabindex="0">
+
+<!-- ============ Fixed-top navbar: logo, menu, dropdown, search, sign-up (Practical 13) ============ -->
+<nav class="navbar navbar-expand-xl fixed-top" aria-label="Main navigation">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+      <span class="brand-mark"><i class="bi bi-water"></i></span>Bluetide
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav me-auto ms-xl-3 mb-2 mb-xl-0">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="rooms.html">Rooms</a></li>
+        <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+        <li class="nav-item"><a class="nav-link active" aria-current="page" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Bookings</a>
+          <ul class="dropdown-menu">
+            <li><h6 class="dropdown-header">Reservations</h6></li>
+            <li><a class="dropdown-item" href="booking.html"><i class="bi bi-calendar-plus me-2"></i>Book a room</a></li>
+            <li><a class="dropdown-item" href="my-bookings.html"><i class="bi bi-journal-check me-2"></i>My bookings</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><h6 class="dropdown-header">Help</h6></li>
+            <li><a class="dropdown-item" href="about.html#faq"><i class="bi bi-question-circle me-2"></i>Questions and answers</a></li>
+            <li><a class="dropdown-item" href="contact.html"><i class="bi bi-headset me-2"></i>Front desk</a></li>
+          </ul>
+        </li>
+      </ul>
+      <form class="nav-search mb-2 mb-xl-0 me-xl-2" id="navSearch" role="search">
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-search"></i></span>
+          <input class="form-control" type="search" id="navSearchInput" placeholder="Search rooms" aria-label="Search rooms">
+        </div>
+      </form>
+      <div class="d-flex gap-2 pb-2 pb-xl-0">
+        <button class="btn btn-outline-secondary" type="button" id="themeToggle" aria-label="Switch to dark theme"><i class="bi bi-moon-stars"></i></button>
+        <button class="btn btn-outline-primary text-nowrap" type="button" data-bs-toggle="modal" data-bs-target="#signupModal">Sign up</button>
+        <a class="btn btn-primary text-nowrap" href="booking.html">Book now</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main id="page">
+<script>
+  // Page transition (Practical 18): fade the page in with Bootstrap's .fade / .show classes
+  (function () {
+    var p = document.getElementById("page");
+    p.classList.add("fade");
+    setTimeout(function () { p.classList.add("show"); }, 40);
+  })();
+</script>
+
+<header class="page-header py-4 py-lg-5">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb small mb-3">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">About</li>
+      </ol>
+    </nav>
+    <h1 class="display-5 mb-2">About Bluetide</h1>
+    <p class="lead text-body-secondary mb-0">Who runs the hotel, how a day here goes, and the rules of the house.</p>
+  </div>
+</header>
+
+<!-- ============ container-fluid: a full-width band of facts (Practical 3) ============ -->
+<div class="container-fluid fluid-band py-4">
+  <div class="row text-center gy-3">
+    <div class="col-6 col-md-3"><div class="fs-2 fw-bold tabular">42</div><div class="small opacity-75">rooms on 3 floors</div></div>
+    <div class="col-6 col-md-3"><div class="fs-2 fw-bold tabular">120 m</div><div class="small opacity-75">to Devka Beach</div></div>
+    <div class="col-6 col-md-3"><div class="fs-2 fw-bold tabular">2012</div><div class="small opacity-75">year we opened</div></div>
+    <div class="col-6 col-md-3"><div class="fs-2 fw-bold tabular">4.7 / 5</div><div class="small opacity-75">average guest rating</div></div>
+  </div>
+</div>
+
+<!-- ============ container: fixed-width content with a Scrollspy side menu (Practicals 3 and 20) ============ -->
+<div class="container py-5">
+  <div class="row g-4 g-lg-5">
+
+    <!-- Scrollspy menu: the active item follows the section on screen -->
+    <div class="col-lg-3 d-none d-lg-block">
+      <nav id="aboutNav" class="list-group sticky-top spy-nav" aria-label="On this page">
+        <a class="list-group-item list-group-item-action" href="#story">Our story</a>
+        <a class="list-group-item list-group-item-action" href="#place">The place</a>
+        <a class="list-group-item list-group-item-action" href="#team">The team</a>
+        <a class="list-group-item list-group-item-action" href="#day">A day at Bluetide</a>
+        <a class="list-group-item list-group-item-action" href="#policies">Hotel policies</a>
+        <a class="list-group-item list-group-item-action" href="#faq">Questions</a>
+      </nav>
+    </div>
+
+    <div class="col-lg-9">
+
+      <!-- ---------- Our story: Bootstrap typography (Practical 7) ---------- -->
+      <section id="story" class="spy-section mb-5 pb-4 border-bottom">
+        <p class="eyebrow mb-2">Our story</p>
+        <h2 class="display-6 mb-3">A family guest house that grew up</h2>
+        <p class="lead">Bluetide began in 2012 as a nine-room guest house run by the Desai family. Today it has 42 rooms, but the same family still eats lunch in the staff canteen.</p>
+        <p>We built the hotel for people driving down from Surat, Vapi and Mumbai for a quiet weekend. That is why the rooms are simple, the pool faces the sunset and <mark>the price you see is the price you pay</mark>. The <abbr title="Goods and Services Tax" class="initialism">GST</abbr> is shown before you confirm, never after.</p>
+        <figure class="my-4 ps-4 border-start border-3 border-primary">
+          <blockquote class="blockquote">
+            <p>A good hotel is one you stop noticing by the second morning.</p>
+          </blockquote>
+          <figcaption class="blockquote-footer mb-0">Meera Desai, <cite title="General Manager">General Manager</cite></figcaption>
+        </figure>
+        <dl class="row mb-0">
+          <dt class="col-sm-3">Opened</dt><dd class="col-sm-9">March 2012, extended in 2019</dd>
+          <dt class="col-sm-3">Rooms</dt><dd class="col-sm-9">42 across eight room types <small class="text-body-secondary">(4 suites, 6 family studios)</small></dd>
+          <dt class="col-sm-3">Languages</dt><dd class="col-sm-9">Gujarati, Hindi, English</dd>
+          <dt class="col-sm-3 text-truncate">Nearest station</dt><dd class="col-sm-9">Vapi, 12 km <span class="text-body-secondary fst-italic">about 25 minutes by car</span></dd>
+        </dl>
+      </section>
+
+      <!-- ---------- The place: offset, reordered and nested columns (Practical 4) ---------- -->
+      <section id="place" class="spy-section mb-5 pb-4 border-bottom">
+        <p class="eyebrow mb-2">The place</p>
+        <h2 class="display-6 mb-4">Between the garden and the sea</h2>
+        <div class="row align-items-center gy-4">
+          <!-- order: the photo is first on phones, second on large screens -->
+          <div class="col-lg-5 order-lg-2 offset-lg-1">
+            <img src="assets/img/garden-pool.jpg" class="img-fluid rounded-4" alt="Garden and pool with the sea behind" data-bs-toggle="tooltip" data-bs-title="The garden pool, seen from the first-floor corridor">
+          </div>
+          <div class="col-lg-6 order-lg-1">
+            <p>The hotel sits on Devka Beach Road in Nani Daman. Garden rooms open onto the lawn; the upper floors look over the trees to the water.</p>
+            <!-- nested row inside a column -->
+            <div class="row g-3">
+              <div class="col-6">
+                <div class="p-3 bg-body-tertiary rounded h-100"><i class="bi bi-airplane text-primary fs-4"></i><div class="fw-bold mt-1">Surat airport</div><div class="small text-body-secondary">118 km, about 2 hr 30 min</div></div>
+              </div>
+              <div class="col-6">
+                <div class="p-3 bg-body-tertiary rounded h-100"><i class="bi bi-train-front text-primary fs-4"></i><div class="fw-bold mt-1">Vapi station</div><div class="small text-body-secondary">12 km, about 25 min</div></div>
+              </div>
+              <div class="col-6">
+                <div class="p-3 bg-body-tertiary rounded h-100"><i class="bi bi-umbrella text-primary fs-4"></i><div class="fw-bold mt-1">Devka Beach</div><div class="small text-body-secondary">120 m on foot</div></div>
+              </div>
+              <div class="col-6">
+                <div class="p-3 bg-body-tertiary rounded h-100"><i class="bi bi-bank text-primary fs-4"></i><div class="fw-bold mt-1">Nani Daman Fort</div><div class="small text-body-secondary">4 km, about 10 min</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row g-3 mt-3">
+          <div class="col-4"><img src="assets/img/reception.jpg" class="img-fluid rounded" alt="Guests at the front desk" style="aspect-ratio: 4 / 3; object-fit: cover; width: 100%;" data-bs-toggle="tooltip" data-bs-title="Front desk, open 24 hours"></div>
+          <div class="col-4"><img src="assets/img/lounge.jpg" class="img-fluid rounded" alt="Lobby cafe" style="aspect-ratio: 4 / 3; object-fit: cover; width: 100%;" data-bs-toggle="tooltip" data-bs-title="Lobby caf&eacute;"></div>
+          <div class="col-4"><img src="assets/img/study.jpg" class="img-fluid rounded" alt="Work lounge with a desk" style="aspect-ratio: 4 / 3; object-fit: cover; width: 100%;" data-bs-toggle="tooltip" data-bs-title="Work lounge on the second floor"></div>
+        </div>
+      </section>
+
+      <!-- ---------- The team: nested media objects in order of hierarchy (Practical 16) ---------- -->
+      <section id="team" class="spy-section mb-5 pb-4 border-bottom">
+        <p class="eyebrow mb-2">The team</p>
+        <h2 class="display-6 mb-4">Who looks after you</h2>
+
+        <div class="d-flex gap-3">
+          <span class="avatar">MD</span>
+          <div class="flex-grow-1">
+            <h3 class="h5 mb-0">Meera Desai</h3>
+            <p class="text-body-secondary mb-3">General Manager &middot; runs the hotel her parents started</p>
+
+            <!-- level 2 -->
+            <div class="d-flex gap-3 mb-3">
+              <span class="avatar">AP</span>
+              <div class="flex-grow-1">
+                <h4 class="h6 mb-0">Arjun Patel</h4>
+                <p class="small text-body-secondary mb-3">Front Office Manager &middot; reservations, check-in, travel desk</p>
+                <!-- level 3 -->
+                <div class="d-flex gap-3 mb-2">
+                  <img src="assets/img/reception.jpg" class="media-photo rounded-circle" alt="Front desk team at work">
+                  <div>
+                    <h5 class="h6 mb-0">Front desk team</h5>
+                    <p class="small text-body-secondary mb-0">Six receptionists working in three shifts, so someone is always at the desk.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex gap-3 mb-3">
+              <span class="avatar">KR</span>
+              <div class="flex-grow-1">
+                <h4 class="h6 mb-0">Kavita Rao</h4>
+                <p class="small text-body-secondary mb-3">Executive Housekeeper &middot; rooms, laundry, garden</p>
+                <div class="d-flex gap-3 mb-2">
+                  <img src="assets/img/room-corner.jpg" class="media-photo rounded" alt="A freshly made room">
+                  <div>
+                    <h5 class="h6 mb-0">Housekeeping team</h5>
+                    <p class="small text-body-secondary mb-0">Fourteen attendants. Rooms are cleaned daily between 9 AM and 1 PM.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex gap-3">
+              <span class="avatar">IS</span>
+              <div class="flex-grow-1">
+                <h4 class="h6 mb-0">Imran Shaikh</h4>
+                <p class="small text-body-secondary mb-3">Executive Chef &middot; Tide Kitchen, garden bar, banquets</p>
+                <div class="d-flex gap-3">
+                  <img src="assets/img/bar.jpg" class="media-photo rounded-circle" alt="Bartender at the garden bar">
+                  <div>
+                    <h5 class="h6 mb-0">Kitchen and bar team</h5>
+                    <p class="small text-body-secondary mb-0">Eleven cooks and four servers. Breakfast starts at 7 AM sharp.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- A day at Bluetide: timetable built with the grid system (Practical 5) ---------- -->
+      <section id="day" class="spy-section mb-5 pb-4 border-bottom">
+        <p class="eyebrow mb-2">A day at Bluetide</p>
+        <h2 class="display-6 mb-4">The daily timetable</h2>
+
+        <div class="day-grid d-grid gap-2">
+          <!-- header row, hidden on phones -->
+          <div class="row g-2 d-none d-md-flex small fw-bold text-uppercase text-body-secondary">
+            <div class="col-md-2">Time</div>
+            <div class="col-md">Food and drink</div>
+            <div class="col-md">Pool and activities</div>
+            <div class="col-md">Front desk and rooms</div>
+          </div>
+          <div class="row g-2">
+            <div class="col-md-2 time pt-md-2">6 to 9 AM</div>
+            <div class="col-md"><div class="slot p-2 small h-100">Breakfast buffet from 7 AM</div></div>
+            <div class="col-md"><div class="slot p-2 small h-100">Sunrise swim, beach walk at 7</div></div>
+            <div class="col-md"><div class="slot p-2 small h-100">Wake-up calls, newspapers</div></div>
+          </div>
+          <div class="row g-2">
+            <div class="col-md-2 time pt-md-2">9 AM to 1 PM</div>
+            <div class="col-md"><div class="slot p-2 small h-100">Lobby caf&eacute; open, breakfast ends 10:30</div></div>
+            <div class="col-md"><div class="slot p-2 small h-100">Cooking class at 11 (Tue, Thu, Sat)</div></div>
+            <div class="col-md"><div class="slot p-2 small h-100">Check-out by 11, rooms cleaned</div></div>
+          </div>
+          <div class="row g-2">
+            <div class="col-md-2 time pt-md-2">1 to 5 PM</div>
+            <div class="col-md"><div class="slot p-2 small h-100">Lunch thali, 12:30 to 3</div></div>
+            <div class="col-md"><div class="slot p-2 small h-100">Pool open, towels at the deck</div></div>
+            <div class="col-md"><div class="slot p-2 small h-100">Check-in from 2 PM</div></div>
+          </div>
+          <div class="row g-2">
+            <div class="col-md-2 time pt-md-2">5 to 11 PM</div>
+            <div class="col-md"><div class="slot p-2 small h-100">Mocktail hour at 5, dinner 7 to 10:30</div></div>
+            <div class="col-md"><div class="slot p-2 small h-100">Pool closes at 9, live music on Sat</div></div>
+            <div class="col-md"><div class="slot p-2 small h-100">Turn-down service, travel desk until 8</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- Policies: navigation tabs (Practical 12) with popovers (Practical 20) ---------- -->
+      <section id="policies" class="spy-section mb-5 pb-4 border-bottom">
+        <p class="eyebrow mb-2">Hotel policies</p>
+        <h2 class="display-6 mb-4">The rules of the house</h2>
+
+        <ul class="nav nav-tabs" id="policyTabs" role="tablist">
+          <li class="nav-item" role="presentation"><button class="nav-link active" id="pol1" data-bs-toggle="tab" data-bs-target="#polCheck" type="button" role="tab" aria-controls="polCheck" aria-selected="true">Check-in</button></li>
+          <li class="nav-item" role="presentation"><button class="nav-link" id="pol2" data-bs-toggle="tab" data-bs-target="#polCancel" type="button" role="tab" aria-controls="polCancel" aria-selected="false">Cancellation</button></li>
+          <li class="nav-item" role="presentation"><button class="nav-link" id="pol3" data-bs-toggle="tab" data-bs-target="#polPay" type="button" role="tab" aria-controls="polPay" aria-selected="false">Payment</button></li>
+          <li class="nav-item" role="presentation"><button class="nav-link" id="pol4" data-bs-toggle="tab" data-bs-target="#polFamily" type="button" role="tab" aria-controls="polFamily" aria-selected="false">Children and pets</button></li>
+        </ul>
+        <div class="tab-content border border-top-0 rounded-bottom p-4">
+          <div class="tab-pane fade show active" id="polCheck" role="tabpanel" aria-labelledby="pol1" tabindex="0">
+            <ul class="mb-0 d-grid gap-2">
+              <li>Check-in is from <strong>2 PM</strong> and check-out is by <strong>11 AM</strong>.</li>
+              <li>Every adult shows one original
+                <button type="button" class="btn btn-link p-0 align-baseline" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="Accepted photo ID" data-bs-content="Aadhaar card, driving licence, passport or voter ID. A PAN card is not accepted as address proof.">photo ID</button> at the desk.</li>
+              <li>Early check-in is free when a room is ready. Late check-out until 4 PM costs &#8377;800.</li>
+            </ul>
+          </div>
+          <div class="tab-pane fade" id="polCancel" role="tabpanel" aria-labelledby="pol2" tabindex="0">
+            <ul class="mb-0 d-grid gap-2">
+              <li>Cancel free up to <strong>24 hours</strong> before check-in, from the My bookings page.</li>
+              <li>After that, one night's room rate is charged.</li>
+              <li>If you do not arrive, the booking is released at 11 AM the next day.</li>
+            </ul>
+          </div>
+          <div class="tab-pane fade" id="polPay" role="tabpanel" aria-labelledby="pol3" tabindex="0">
+            <ul class="mb-0 d-grid gap-2">
+              <li>Pay at check-in by cash, card or UPI. No advance is taken online.</li>
+              <li>
+                <button type="button" class="btn btn-link p-0 align-baseline" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="How GST is worked out" data-bs-content="5% when the room rate is up to Rs 7,500 a night, and 18% above that. Extras are taxed at the same rate as the room.">GST</button>
+                is added to the room rate and shown before you confirm.</li>
+              <li>The offer code TIDE15 takes 15% off the room rate, not off extras.</li>
+            </ul>
+          </div>
+          <div class="tab-pane fade" id="polFamily" role="tabpanel" aria-labelledby="pol4" tabindex="0">
+            <ul class="mb-0 d-grid gap-2">
+              <li>Children under 12 stay free in their parents' room, using the existing beds.</li>
+              <li>An extra bed or a baby cot is free on request, if the room has space.</li>
+              <li>Pets are welcome in Garden Cottages only. Please tell us in the special requests box.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- Questions: collapsible accordion (Practical 20) ---------- -->
+      <section id="faq" class="spy-section">
+        <p class="eyebrow mb-2">Questions</p>
+        <h2 class="display-6 mb-4">Things guests ask us</h2>
+
+        <div class="accordion" id="faqList">
+          <div class="accordion-item">
+            <h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="true" aria-controls="faq1">Do I need to pay anything when I book?</button></h3>
+            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqList">
+              <div class="accordion-body">No. The booking is held without payment and you pay the full amount at check-in.</div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">How do I change my dates?</button></h3>
+            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqList">
+              <div class="accordion-body">Cancel the booking on the My bookings page and make a new one. Both are free until 24 hours before check-in.</div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">Is breakfast included?</button></h3>
+            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqList">
+              <div class="accordion-body">It is included with the Premium King and the Sea View Suite. For other rooms add it on the booking page for &#8377;450 a guest, per night.</div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" aria-expanded="false" aria-controls="faq4">Is the pool safe for children?</button></h3>
+            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqList">
+              <div class="accordion-body">Yes. The shallow end is 1.2 m deep and a lifeguard is on duty whenever the pool is open. Children under 12 need an adult with them.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- A plain collapse, toggled by a button -->
+        <p class="mt-4 mb-2">
+          <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#moreHelp" aria-expanded="false" aria-controls="moreHelp"><i class="bi bi-chat-dots me-1"></i>Still have a question?</button>
+        </p>
+        <div class="collapse" id="moreHelp">
+          <div class="card card-body">
+            Call the front desk on +91 260 555 0142 at any hour, or write to us from the <a href="contact.html">contact page</a>.
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- ============ Footer built with utility classes only (Practical 22) ============ -->
+<footer class="site-footer text-white pt-5 pb-4 mt-auto" data-bs-theme="dark">
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-lg-4">
+        <div class="d-flex align-items-center gap-2 fs-4 mb-3"><span class="brand-mark"><i class="bi bi-water"></i></span><span class="navbar-brand m-0">Bluetide</span></div>
+        <p class="text-white-50 mb-3 pe-lg-5">A 42-room hotel on Devka Beach, Daman. Quiet rooms, an infinity pool and a kitchen that cooks the day's catch.</p>
+        <div class="d-flex gap-2">
+          <a class="btn btn-outline-light btn-sm rounded-circle" href="contact.html" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a class="btn btn-outline-light btn-sm rounded-circle" href="contact.html" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a class="btn btn-outline-light btn-sm rounded-circle" href="contact.html" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h6 class="text-uppercase small fw-bold mb-3">Stay</h6>
+        <ul class="list-unstyled d-grid gap-2 mb-0">
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="rooms.html">Rooms</a></li>
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="booking.html">Book a room</a></li>
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="my-bookings.html">My bookings</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h6 class="text-uppercase small fw-bold mb-3">Hotel</h6>
+        <ul class="list-unstyled d-grid gap-2 mb-0">
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="gallery.html">Gallery</a></li>
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="about.html">About</a></li>
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4">
+        <h6 class="text-uppercase small fw-bold mb-3">Front desk, open 24 hours</h6>
+        <ul class="list-unstyled d-grid gap-2 text-white-50 mb-0">
+          <li><i class="bi bi-geo-alt me-2"></i>Devka Beach Road, Nani Daman 396210</li>
+          <li><i class="bi bi-telephone me-2"></i>+91 260 555 0142</li>
+          <li><i class="bi bi-envelope me-2"></i>stay@bluetide.example</li>
+        </ul>
+      </div>
+    </div>
+    <hr class="border-light opacity-25 my-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+      <p class="small text-white-50 mb-0">Bluetide Hotel is a fictional hotel made for an RWPD micro project. Photos from Unsplash.</p>
+      <!-- Drop-up menu with a header (Practical 9) -->
+      <div class="btn-group dropup">
+        <button class="btn btn-outline-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-globe2 me-1"></i><span id="langLabel">English</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><h6 class="dropdown-header">Language</h6></li>
+          <li><button class="dropdown-item" type="button" data-lang="English">English</button></li>
+          <li><button class="dropdown-item" type="button" data-lang="ગુજરાતી">ગુજરાતી</button></li>
+          <li><button class="dropdown-item" type="button" data-lang="हिन्दी">हिन्दी</button></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ Fixed-bottom bar on phones and tablets (Practical 13) ============ -->
+<nav class="bottom-bar fixed-bottom d-lg-none" aria-label="Quick links">
+  <div class="nav nav-justified">
+    <a class="nav-link" href="index.html"><i class="bi bi-house-door"></i>Home</a>
+    <a class="nav-link" href="rooms.html"><i class="bi bi-door-open"></i>Rooms</a>
+    <a class="nav-link" href="booking.html"><i class="bi bi-calendar-plus"></i>Book</a>
+    <a class="nav-link" href="my-bookings.html"><i class="bi bi-journal-check"></i>Bookings</a>
+    <a class="nav-link" href="contact.html"><i class="bi bi-telephone"></i>Contact</a>
+  </div>
+</nav>
+
+<!-- ============ Sign-up modal ============ -->
+<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <form class="modal-content" id="signupForm" novalidate>
+      <div class="modal-header">
+        <h2 class="modal-title fs-4" id="signupTitle">Join Bluetide Circle</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="text-body-secondary">Members get early check-in when a room is ready and 10% off at the restaurant.</p>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="signupName" placeholder="Full name" required>
+          <label for="signupName">Full name</label>
+          <div class="invalid-feedback">Enter your name.</div>
+        </div>
+        <div class="form-floating">
+          <input type="email" class="form-control" id="signupEmail" placeholder="name@example.com" required>
+          <label for="signupEmail">Email address</label>
+          <div class="invalid-feedback">Enter a valid email address.</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Not now</button>
+        <button type="submit" class="btn btn-primary">Sign up</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Toast messages appear here -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3 mb-5 mb-lg-0" id="toastBox"></div>
+
+<!-- Bootstrap JS bundle (includes Popper for dropdowns, tooltips and popovers) -->
+<script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

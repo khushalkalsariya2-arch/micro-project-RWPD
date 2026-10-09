@@ -1,0 +1,17 @@
+{
+  "name": "bluetide-hotel",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Hotel Room Booking UI - RWPD micro project (Bootstrap 5)",
+  "scripts": {
+    "css": "sass --load-path=node_modules --style=compressed --no-source-map --quiet-deps scss/main.scss assets/css/main.css",
+    "css:watch": "sass --watch --load-path=node_modules --quiet-deps scss/main.scss assets/css/main.css"
+  },
+  "dependencies": {
+    "bootstrap": "5.3.3",
+    "bootstrap-icons": "1.11.3"
+  },
+  "devDependencies": {
+    "sass": "1.77.8"
+  }
+}

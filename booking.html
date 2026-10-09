@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Book a room | Bluetide Hotel</title>
+<meta name="description" content="Reserve your room at Bluetide Hotel in three steps.">
+<!-- Bootstrap 5.3 + our theme, compiled from scss/main.scss (Practicals 1, 23, 24) -->
+<link rel="stylesheet" href="assets/css/main.css">
+<!-- Bootstrap Icons (the Bootstrap 5 replacement for Glyphicons) -->
+<link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.min.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<!-- ============ Fixed-top navbar: logo, menu, dropdown, search, sign-up (Practical 13) ============ -->
+<nav class="navbar navbar-expand-xl fixed-top" aria-label="Main navigation">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+      <span class="brand-mark"><i class="bi bi-water"></i></span>Bluetide
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav me-auto ms-xl-3 mb-2 mb-xl-0">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="rooms.html">Rooms</a></li>
+        <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Bookings</a>
+          <ul class="dropdown-menu">
+            <li><h6 class="dropdown-header">Reservations</h6></li>
+            <li><a class="dropdown-item" href="booking.html"><i class="bi bi-calendar-plus me-2"></i>Book a room</a></li>
+            <li><a class="dropdown-item" href="my-bookings.html"><i class="bi bi-journal-check me-2"></i>My bookings</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><h6 class="dropdown-header">Help</h6></li>
+            <li><a class="dropdown-item" href="about.html#faq"><i class="bi bi-question-circle me-2"></i>Questions and answers</a></li>
+            <li><a class="dropdown-item" href="contact.html"><i class="bi bi-headset me-2"></i>Front desk</a></li>
+          </ul>
+        </li>
+      </ul>
+      <form class="nav-search mb-2 mb-xl-0 me-xl-2" id="navSearch" role="search">
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-search"></i></span>
+          <input class="form-control" type="search" id="navSearchInput" placeholder="Search rooms" aria-label="Search rooms">
+        </div>
+      </form>
+      <div class="d-flex gap-2 pb-2 pb-xl-0">
+        <button class="btn btn-outline-secondary" type="button" id="themeToggle" aria-label="Switch to dark theme"><i class="bi bi-moon-stars"></i></button>
+        <button class="btn btn-outline-primary text-nowrap" type="button" data-bs-toggle="modal" data-bs-target="#signupModal">Sign up</button>
+        <a class="btn btn-primary text-nowrap" href="booking.html">Book now</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main id="page">
+<script>
+  // Page transition (Practical 18): fade the page in with Bootstrap's .fade / .show classes
+  (function () {
+    var p = document.getElementById("page");
+    p.classList.add("fade");
+    setTimeout(function () { p.classList.add("show"); }, 40);
+  })();
+</script>
+
+<header class="page-header py-4">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb small mb-2">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item"><a href="rooms.html">Rooms</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Book a room</li>
+      </ol>
+    </nav>
+    <h1 class="display-6 mb-0">Reserve your room</h1>
+  </div>
+</header>
+
+<section class="py-4 py-lg-5">
+  <div class="container">
+
+    <!-- Messages (success alert after saving) are added here by booking.js -->
+    <div id="bookingAlerts"></div>
+
+    <!-- ============ Steps: nav pills + a progress bar that JavaScript updates (Practicals 12 and 15 d) ============ -->
+    <div class="mb-4" id="stepsHeader">
+      <ul class="nav nav-pills nav-fill stepper gap-2 mb-3" id="stepTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="tab1" data-bs-toggle="pill" data-bs-target="#step1" type="button" role="tab" aria-controls="step1" aria-selected="true"><span class="step-no">1</span>Your stay</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="tab2" data-bs-toggle="pill" data-bs-target="#step2" type="button" role="tab" aria-controls="step2" aria-selected="false" disabled><span class="step-no">2</span>Guest details</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="tab3" data-bs-toggle="pill" data-bs-target="#step3" type="button" role="tab" aria-controls="step3" aria-selected="false" disabled><span class="step-no">3</span>Review and confirm</button>
+        </li>
+      </ul>
+      <div class="progress" role="progressbar" aria-label="Booking progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="33" id="stepProgress" style="height: 1.1rem;">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" id="stepBar" style="width: 33%;">Step 1 of 3</div>
+      </div>
+    </div>
+
+    <div class="row g-4 g-lg-5" id="bookingArea">
+
+      <!-- ============ The reservation form (Practicals 8 and 11) ============ -->
+      <div class="col-lg-7">
+        <form id="bookingForm" novalidate>
+          <div class="tab-content">
+
+            <!-- ---------- Step 1: stay ---------- -->
+            <div class="tab-pane fade show active" id="step1" role="tabpanel" aria-labelledby="tab1" tabindex="0">
+              <div class="card">
+                <div class="card-header py-3"><h2 class="h5 mb-0 h-sans">Your stay</h2></div>
+                <div class="card-body">
+                  <div class="row g-3">
+                    <div class="col-12">
+                      <label class="form-label fw-semibold" for="room">Room</label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-door-open"></i></span>
+                        <select class="form-select" id="room" required></select>
+                      </div>
+                      <div class="form-text" id="roomHelp"></div>
+                    </div>
+                    <div class="col-sm-6">
+                      <label class="form-label fw-semibold" for="checkIn">Check-in</label>
+                      <div class="input-group has-validation">
+                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                        <input type="date" class="form-control" id="checkIn" required>
+                        <span class="input-group-text">2 PM</span>
+                        <div class="invalid-feedback">Choose a check-in date from today onwards.</div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <label class="form-label fw-semibold" for="checkOut">Check-out</label>
+                      <div class="input-group has-validation">
+                        <span class="input-group-text"><i class="bi bi-calendar-check"></i></span>
+                        <input type="date" class="form-control" id="checkOut" required>
+                        <span class="input-group-text">11 AM</span>
+                        <div class="invalid-feedback">Check-out must be after check-in.</div>
+                      </div>
+                    </div>
+
+                    <!-- Input groups with buttons on both sides -->
+                    <div class="col-6 col-sm-4">
+                      <label class="form-label fw-semibold" for="adults">Adults</label>
+                      <div class="input-group has-validation qty-group">
+                        <button class="btn btn-outline-secondary" type="button" data-step="-1" data-for="adults" aria-label="One adult fewer"><i class="bi bi-dash"></i></button>
+                        <input type="number" class="form-control" id="adults" value="2" min="1" max="4" required>
+                        <button class="btn btn-outline-secondary" type="button" data-step="1" data-for="adults" aria-label="One more adult"><i class="bi bi-plus"></i></button>
+                        <div class="invalid-feedback" id="adultsError">This room does not sleep that many guests.</div>
+                      </div>
+                    </div>
+                    <div class="col-6 col-sm-4">
+                      <label class="form-label fw-semibold" for="children">Children</label>
+                      <div class="input-group qty-group">
+                        <button class="btn btn-outline-secondary" type="button" data-step="-1" data-for="children" aria-label="One child fewer"><i class="bi bi-dash"></i></button>
+                        <input type="number" class="form-control" id="children" value="0" min="0" max="3" required>
+                        <button class="btn btn-outline-secondary" type="button" data-step="1" data-for="children" aria-label="One more child"><i class="bi bi-plus"></i></button>
+                      </div>
+                      <div class="form-text">Under 12 years</div>
+                    </div>
+                    <div class="col-sm-4">
+                      <span class="form-label fw-semibold d-block">Bed setup</span>
+                      <div class="form-check mt-2">
+                        <input class="form-check-input" type="radio" name="bedPref" id="bedAsListed" value="As listed" checked>
+                        <label class="form-check-label" for="bedAsListed">As listed</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="bedPref" id="bedExtra" value="Extra bed">
+                        <label class="form-check-label" for="bedExtra">Add an extra bed</label>
+                      </div>
+                    </div>
+
+                    <div class="col-12"><hr class="my-1"></div>
+
+                    <div class="col-12">
+                      <span class="form-label fw-semibold d-block mb-2">Add to your stay</span>
+                      <div class="list-group">
+                        <label class="list-group-item d-flex align-items-center gap-3" for="xBreakfast">
+                          <span class="form-check form-switch m-0"><input class="form-check-input" type="checkbox" role="switch" id="xBreakfast" value="breakfast"></span>
+                          <span class="flex-grow-1"><span class="fw-semibold d-block">Breakfast buffet</span><span class="small text-body-secondary">7 to 10:30 AM at the Tide Kitchen</span></span>
+                          <span class="badge bg-body-secondary text-body tabular flex-shrink-0">&#8377;450 / guest / night</span>
+                        </label>
+                        <label class="list-group-item d-flex align-items-center gap-3" for="xPickup">
+                          <span class="form-check form-switch m-0"><input class="form-check-input" type="checkbox" role="switch" id="xPickup" value="pickup"></span>
+                          <span class="flex-grow-1"><span class="fw-semibold d-block">Airport pickup</span><span class="small text-body-secondary">Surat airport or Vapi station, one way</span></span>
+                          <span class="badge bg-body-secondary text-body tabular flex-shrink-0">&#8377;1,200</span>
+                        </label>
+                        <label class="list-group-item d-flex align-items-center gap-3" for="xLate">
+                          <span class="form-check form-switch m-0"><input class="form-check-input" type="checkbox" role="switch" id="xLate" value="late"></span>
+                          <span class="flex-grow-1"><span class="fw-semibold d-block">Late check-out</span><span class="small text-body-secondary">Keep the room until 4 PM</span></span>
+                          <span class="badge bg-body-secondary text-body tabular flex-shrink-0">&#8377;800</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <label class="form-label fw-semibold" for="requests">Special requests <span class="fw-normal text-body-secondary">(optional)</span></label>
+                      <textarea class="form-control" id="requests" rows="2" maxlength="200" placeholder="For example: a higher floor, or a cot for a baby"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer bg-transparent d-flex justify-content-between py-3">
+                  <a class="btn btn-outline-secondary" href="rooms.html"><i class="bi bi-arrow-left me-1"></i>Back to rooms</a>
+                  <button class="btn btn-primary" type="button" data-next="2">Continue<i class="bi bi-arrow-right ms-1"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ---------- Step 2: guest ---------- -->
+            <div class="tab-pane fade" id="step2" role="tabpanel" aria-labelledby="tab2" tabindex="0">
+              <div class="card">
+                <div class="card-header py-3"><h2 class="h5 mb-0 h-sans">Guest details</h2></div>
+                <div class="card-body">
+                  <div class="row g-3">
+                    <!-- Floating labels -->
+                    <div class="col-sm-6">
+                      <div class="form-floating">
+                        <input type="text" class="form-control" id="firstName" placeholder="First name" required autocomplete="given-name">
+                        <label for="firstName">First name</label>
+                        <div class="invalid-feedback">Enter the guest's first name.</div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-floating">
+                        <input type="text" class="form-control" id="lastName" placeholder="Last name" required autocomplete="family-name">
+                        <label for="lastName">Last name</label>
+                        <div class="invalid-feedback">Enter the guest's last name.</div>
+                      </div>
+                    </div>
+                    <!-- Input groups with text add-ons -->
+                    <div class="col-sm-6">
+                      <label class="form-label fw-semibold" for="email">Email</label>
+                      <div class="input-group has-validation">
+                        <span class="input-group-text">@</span>
+                        <input type="email" class="form-control" id="email" placeholder="name@example.com" required autocomplete="email">
+                        <div class="invalid-feedback">Enter a valid email address.</div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <label class="form-label fw-semibold" for="phone">Mobile number</label>
+                      <div class="input-group has-validation">
+                        <span class="input-group-text">+91</span>
+                        <input type="tel" class="form-control" id="phone" placeholder="10-digit number" pattern="[6-9][0-9]{9}" maxlength="10" required autocomplete="tel-national">
+                        <div class="invalid-feedback">Enter a 10-digit Indian mobile number.</div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <label class="form-label fw-semibold" for="city">City</label>
+                      <input type="text" class="form-control" id="city" list="cityList" placeholder="Start typing" required>
+                      <datalist id="cityList">
+                        <option value="Surat"></option><option value="Vapi"></option><option value="Valsad"></option><option value="Navsari"></option>
+                        <option value="Vadodara"></option><option value="Ahmedabad"></option><option value="Mumbai"></option><option value="Pune"></option>
+                      </datalist>
+                      <div class="invalid-feedback">Enter your city.</div>
+                    </div>
+                    <div class="col-sm-6">
+                      <label class="form-label fw-semibold" for="arrival">Arrival time</label>
+                      <select class="form-select" id="arrival" required>
+                        <option value="" selected disabled>Choose a time</option>
+                        <option>2 PM to 4 PM</option>
+                        <option>4 PM to 6 PM</option>
+                        <option>6 PM to 9 PM</option>
+                        <option>After 9 PM</option>
+                      </select>
+                      <div class="invalid-feedback">Tell us roughly when you will arrive.</div>
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label fw-semibold" for="idType">Photo ID you will show at check-in</label>
+                      <div class="input-group has-validation">
+                        <label class="input-group-text" for="idType"><i class="bi bi-person-vcard"></i></label>
+                        <select class="form-select" id="idType" required>
+                          <option value="" selected disabled>Choose an ID</option>
+                          <option>Aadhaar card</option>
+                          <option>Driving licence</option>
+                          <option>Passport</option>
+                          <option>Voter ID</option>
+                        </select>
+                        <div class="invalid-feedback">Choose the ID you will carry.</div>
+                      </div>
+                      <div class="form-text">We only note the type here. The front desk checks the ID when you arrive.</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer bg-transparent d-flex justify-content-between py-3">
+                  <button class="btn btn-outline-secondary" type="button" data-next="1"><i class="bi bi-arrow-left me-1"></i>Back</button>
+                  <button class="btn btn-primary" type="button" data-next="3">Continue<i class="bi bi-arrow-right ms-1"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ---------- Step 3: review ---------- -->
+            <div class="tab-pane fade" id="step3" role="tabpanel" aria-labelledby="tab3" tabindex="0">
+              <div class="card">
+                <div class="card-header py-3"><h2 class="h5 mb-0 h-sans">Review and confirm</h2></div>
+                <div class="card-body">
+                  <dl class="row mb-4" id="reviewList"></dl>
+
+                  <span class="form-label fw-semibold d-block mb-2">How would you like to pay?</span>
+                  <div class="row g-2 mb-4">
+                    <div class="col-sm-6">
+                      <input type="radio" class="btn-check" name="pay" id="payHotel" value="Pay at the hotel" checked>
+                      <label class="btn btn-outline-primary w-100 text-start p-3" for="payHotel"><i class="bi bi-building me-2"></i>Pay at the hotel<span class="d-block small fw-normal">Cash or card at check-in</span></label>
+                    </div>
+                    <div class="col-sm-6">
+                      <input type="radio" class="btn-check" name="pay" id="payUpi" value="UPI at the hotel">
+                      <label class="btn btn-outline-primary w-100 text-start p-3" for="payUpi"><i class="bi bi-qr-code me-2"></i>UPI at the hotel<span class="d-block small fw-normal">Scan the QR code at the front desk</span></label>
+                    </div>
+                  </div>
+
+                  <!-- Input group with a button add-on -->
+                  <label class="form-label fw-semibold" for="promo">Offer code</label>
+                  <div class="input-group mb-1">
+                    <span class="input-group-text"><i class="bi bi-tag"></i></span>
+                    <input type="text" class="form-control text-uppercase" id="promo" placeholder="TIDE15" maxlength="12" autocomplete="off">
+                    <button class="btn btn-outline-primary" type="button" id="applyPromo">Apply</button>
+                  </div>
+                  <div class="form-text mb-4" id="promoHelp">Have a code? Enter it and press Apply.</div>
+
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="terms" required>
+                    <label class="form-check-label" for="terms">I agree to the <a href="about.html#policies" target="_blank">hotel policies</a>: check-in from 2 PM, check-out by 11 AM, free cancellation up to 24 hours before check-in.</label>
+                    <div class="invalid-feedback">Please accept the hotel policies to continue.</div>
+                  </div>
+                </div>
+                <div class="card-footer bg-transparent d-flex justify-content-between py-3">
+                  <button class="btn btn-outline-secondary" type="button" data-next="2"><i class="bi bi-arrow-left me-1"></i>Back</button>
+                  <button class="btn btn-primary" type="button" id="confirmBtn"><i class="bi bi-check2-circle me-1"></i>Confirm reservation</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- ============ Price summary: card ("panel") with a list group (Practical 17) ============ -->
+      <div class="col-lg-5">
+        <aside class="card sticky-lg-top summary-card" aria-label="Price summary">
+          <img class="card-img-top" id="sumImg" src="assets/img/room-deluxe.jpg" alt="" style="aspect-ratio: 16 / 8; object-fit: cover;">
+          <div class="card-body pb-2">
+            <h2 class="h5 mb-1 h-sans" id="sumRoom">Deluxe Double</h2>
+            <p class="small text-body-secondary mb-0" id="sumDates"></p>
+          </div>
+          <ul class="list-group list-group-flush tabular" id="sumLines"></ul>
+          <div class="card-footer bg-transparent d-flex justify-content-between align-items-baseline py-3">
+            <span class="fw-semibold">Total to pay</span>
+            <span class="h3 price mb-0" id="sumTotal"></span>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- ============ Confirmation message, shown after the booking is saved ============ -->
+    <div class="row justify-content-center" id="confirmation" hidden>
+      <div class="col-lg-8">
+        <div class="card text-center">
+          <div class="card-body p-4 p-lg-5">
+            <span class="icon-tile bg-success-subtle text-success-emphasis mb-3" style="width: 4rem; height: 4rem; font-size: 2rem; border-radius: 50%;"><i class="bi bi-check-lg"></i></span>
+            <h2 class="display-6 mb-2">Your room is reserved</h2>
+            <p class="text-body-secondary mb-4">Booking reference <span class="badge text-bg-primary fs-6 tabular" id="confId"></span></p>
+            <ul class="list-group text-start mb-4" id="confLines"></ul>
+            <div class="d-flex flex-wrap justify-content-center gap-2">
+              <a class="btn btn-primary" href="my-bookings.html"><i class="bi bi-journal-check me-1"></i>View my bookings</a>
+              <a class="btn btn-outline-primary" href="rooms.html">Book another room</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ "Save record" confirmation modal (Practical 19) ============ -->
+<div class="modal fade" id="saveModal" tabindex="-1" aria-labelledby="saveModalTitle" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title fs-4" id="saveModalTitle">Save this reservation?</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="mb-3" id="saveModalText"></p>
+        <div class="alert alert-info d-flex gap-2 mb-0" role="alert"><i class="bi bi-info-circle"></i><div class="small">Nothing is charged now. You can cancel free from My bookings up to 24 hours before check-in.</div></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Go back</button>
+        <button type="button" class="btn btn-primary" id="saveBtn"><i class="bi bi-floppy me-1"></i>Save reservation</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- ============ Footer built with utility classes only (Practical 22) ============ -->
+<footer class="site-footer text-white pt-5 pb-4 mt-auto" data-bs-theme="dark">
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-lg-4">
+        <div class="d-flex align-items-center gap-2 fs-4 mb-3"><span class="brand-mark"><i class="bi bi-water"></i></span><span class="navbar-brand m-0">Bluetide</span></div>
+        <p class="text-white-50 mb-3 pe-lg-5">A 42-room hotel on Devka Beach, Daman. Quiet rooms, an infinity pool and a kitchen that cooks the day's catch.</p>
+        <div class="d-flex gap-2">
+          <a class="btn btn-outline-light btn-sm rounded-circle" href="contact.html" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a class="btn btn-outline-light btn-sm rounded-circle" href="contact.html" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a class="btn btn-outline-light btn-sm rounded-circle" href="contact.html" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h6 class="text-uppercase small fw-bold mb-3">Stay</h6>
+        <ul class="list-unstyled d-grid gap-2 mb-0">
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="rooms.html">Rooms</a></li>
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="booking.html">Book a room</a></li>
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="my-bookings.html">My bookings</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h6 class="text-uppercase small fw-bold mb-3">Hotel</h6>
+        <ul class="list-unstyled d-grid gap-2 mb-0">
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="gallery.html">Gallery</a></li>
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="about.html">About</a></li>
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4">
+        <h6 class="text-uppercase small fw-bold mb-3">Front desk, open 24 hours</h6>
+        <ul class="list-unstyled d-grid gap-2 text-white-50 mb-0">
+          <li><i class="bi bi-geo-alt me-2"></i>Devka Beach Road, Nani Daman 396210</li>
+          <li><i class="bi bi-telephone me-2"></i>+91 260 555 0142</li>
+          <li><i class="bi bi-envelope me-2"></i>stay@bluetide.example</li>
+        </ul>
+      </div>
+    </div>
+    <hr class="border-light opacity-25 my-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+      <p class="small text-white-50 mb-0">Bluetide Hotel is a fictional hotel made for an RWPD micro project. Photos from Unsplash.</p>
+      <!-- Drop-up menu with a header (Practical 9) -->
+      <div class="btn-group dropup">
+        <button class="btn btn-outline-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-globe2 me-1"></i><span id="langLabel">English</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><h6 class="dropdown-header">Language</h6></li>
+          <li><button class="dropdown-item" type="button" data-lang="English">English</button></li>
+          <li><button class="dropdown-item" type="button" data-lang="ગુજરાતી">ગુજરાતી</button></li>
+          <li><button class="dropdown-item" type="button" data-lang="हिन्दी">हिन्दी</button></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ Fixed-bottom bar on phones and tablets (Practical 13) ============ -->
+<nav class="bottom-bar fixed-bottom d-lg-none" aria-label="Quick links">
+  <div class="nav nav-justified">
+    <a class="nav-link" href="index.html"><i class="bi bi-house-door"></i>Home</a>
+    <a class="nav-link" href="rooms.html"><i class="bi bi-door-open"></i>Rooms</a>
+    <a class="nav-link active" aria-current="page" href="booking.html"><i class="bi bi-calendar-plus"></i>Book</a>
+    <a class="nav-link" href="my-bookings.html"><i class="bi bi-journal-check"></i>Bookings</a>
+    <a class="nav-link" href="contact.html"><i class="bi bi-telephone"></i>Contact</a>
+  </div>
+</nav>
+
+<!-- ============ Sign-up modal ============ -->
+<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <form class="modal-content" id="signupForm" novalidate>
+      <div class="modal-header">
+        <h2 class="modal-title fs-4" id="signupTitle">Join Bluetide Circle</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="text-body-secondary">Members get early check-in when a room is ready and 10% off at the restaurant.</p>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="signupName" placeholder="Full name" required>
+          <label for="signupName">Full name</label>
+          <div class="invalid-feedback">Enter your name.</div>
+        </div>
+        <div class="form-floating">
+          <input type="email" class="form-control" id="signupEmail" placeholder="name@example.com" required>
+          <label for="signupEmail">Email address</label>
+          <div class="invalid-feedback">Enter a valid email address.</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Not now</button>
+        <button type="submit" class="btn btn-primary">Sign up</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Toast messages appear here -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3 mb-5 mb-lg-0" id="toastBox"></div>
+
+<!-- Bootstrap JS bundle (includes Popper for dropdowns, tooltips and popovers) -->
+<script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/booking.js"></script>
+</body>
+</html>

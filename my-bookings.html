@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My bookings | Bluetide Hotel</title>
+<meta name="description" content="View or cancel your Bluetide Hotel reservations.">
+<!-- Bootstrap 5.3 + our theme, compiled from scss/main.scss (Practicals 1, 23, 24) -->
+<link rel="stylesheet" href="assets/css/main.css">
+<!-- Bootstrap Icons (the Bootstrap 5 replacement for Glyphicons) -->
+<link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.min.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<!-- ============ Fixed-top navbar: logo, menu, dropdown, search, sign-up (Practical 13) ============ -->
+<nav class="navbar navbar-expand-xl fixed-top" aria-label="Main navigation">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+      <span class="brand-mark"><i class="bi bi-water"></i></span>Bluetide
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav me-auto ms-xl-3 mb-2 mb-xl-0">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="rooms.html">Rooms</a></li>
+        <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Bookings</a>
+          <ul class="dropdown-menu">
+            <li><h6 class="dropdown-header">Reservations</h6></li>
+            <li><a class="dropdown-item" href="booking.html"><i class="bi bi-calendar-plus me-2"></i>Book a room</a></li>
+            <li><a class="dropdown-item" href="my-bookings.html"><i class="bi bi-journal-check me-2"></i>My bookings</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><h6 class="dropdown-header">Help</h6></li>
+            <li><a class="dropdown-item" href="about.html#faq"><i class="bi bi-question-circle me-2"></i>Questions and answers</a></li>
+            <li><a class="dropdown-item" href="contact.html"><i class="bi bi-headset me-2"></i>Front desk</a></li>
+          </ul>
+        </li>
+      </ul>
+      <form class="nav-search mb-2 mb-xl-0 me-xl-2" id="navSearch" role="search">
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-search"></i></span>
+          <input class="form-control" type="search" id="navSearchInput" placeholder="Search rooms" aria-label="Search rooms">
+        </div>
+      </form>
+      <div class="d-flex gap-2 pb-2 pb-xl-0">
+        <button class="btn btn-outline-secondary" type="button" id="themeToggle" aria-label="Switch to dark theme"><i class="bi bi-moon-stars"></i></button>
+        <button class="btn btn-outline-primary text-nowrap" type="button" data-bs-toggle="modal" data-bs-target="#signupModal">Sign up</button>
+        <a class="btn btn-primary text-nowrap" href="booking.html">Book now</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main id="page">
+<script>
+  // Page transition (Practical 18): fade the page in with Bootstrap's .fade / .show classes
+  (function () {
+    var p = document.getElementById("page");
+    p.classList.add("fade");
+    setTimeout(function () { p.classList.add("show"); }, 40);
+  })();
+</script>
+
+<header class="page-header py-4 py-lg-5">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb small mb-3">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">My bookings</li>
+      </ol>
+    </nav>
+    <div class="d-flex flex-wrap justify-content-between align-items-end gap-3">
+      <div>
+        <h1 class="display-5 mb-2">My bookings</h1>
+        <p class="lead text-body-secondary mb-0">Reservations saved on this device. View the details or cancel one.</p>
+      </div>
+      <a class="btn btn-primary" href="booking.html"><i class="bi bi-plus-lg me-1"></i>New booking</a>
+    </div>
+  </div>
+</header>
+
+<section class="py-4 py-lg-5">
+  <div class="container">
+
+    <!-- Alerts (new booking, cancelled booking) are added here by bookings.js -->
+    <div id="bookingAlerts"></div>
+
+    <!-- Summary figures -->
+    <div class="row row-cols-1 row-cols-sm-3 g-3 mb-4">
+      <div class="col"><div class="card card-body"><span class="small text-body-secondary">Upcoming stays</span><span class="fs-2 fw-bold tabular" id="statStays">0</span></div></div>
+      <div class="col"><div class="card card-body"><span class="small text-body-secondary">Nights booked</span><span class="fs-2 fw-bold tabular" id="statNights">0</span></div></div>
+      <div class="col"><div class="card card-body"><span class="small text-body-secondary">Total to pay at the hotel</span><span class="fs-2 fw-bold tabular" id="statTotal">&#8377;0</span></div></div>
+    </div>
+
+    <!-- ============ Bookings table: responsive + hover (Practical 6) ============ -->
+    <div class="card" id="tableCard">
+      <div class="card-header d-flex justify-content-between align-items-center py-3">
+        <span class="fw-bold">Reservations</span>
+        <span class="badge text-bg-primary rounded-pill" id="countBadge">0</span>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr class="small text-body-secondary">
+              <th scope="col" class="ps-3">Reference</th>
+              <th scope="col">Room</th>
+              <th scope="col">Dates</th>
+              <th scope="col" class="text-end">Guests</th>
+              <th scope="col" class="text-end">Total</th>
+              <th scope="col">Status</th>
+              <th scope="col" class="text-end pe-3">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="bookingRows" class="tabular"></tbody>
+        </table>
+      </div>
+      <div class="card-footer bg-transparent small text-body-secondary py-3">
+        <i class="bi bi-shield-check me-1"></i>Free cancellation up to 24 hours before check-in. Rows marked <span class="badge bg-body-secondary text-body">Sample</span> are examples so the page is not empty.
+      </div>
+    </div>
+
+    <!-- Shown when there are no bookings left -->
+    <div class="card card-body text-center py-5" id="emptyState" hidden>
+      <i class="bi bi-calendar-x fs-1 text-body-secondary"></i>
+      <h2 class="h4 mt-3 h-sans">No bookings yet</h2>
+      <p class="text-body-secondary">When you reserve a room it will appear here.</p>
+      <div><a class="btn btn-primary" href="rooms.html">Choose a room</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Booking details modal ============ -->
+<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title fs-4" id="viewModalTitle">Booking</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-0">
+        <img id="viewImg" src="assets/img/room-deluxe.jpg" alt="" class="w-100" style="aspect-ratio: 16 / 7; object-fit: cover;">
+        <ul class="list-group list-group-flush tabular" id="viewLines"></ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ "Delete record" confirmation modal (Practical 19) ============ -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title fs-4" id="deleteModalTitle">Cancel this booking?</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p id="deleteModalText" class="mb-3"></p>
+        <div class="alert alert-warning d-flex gap-2 mb-0" role="alert"><i class="bi bi-exclamation-triangle"></i><div class="small">The booking will be deleted from this list. This cannot be undone.</div></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Keep booking</button>
+        <button type="button" class="btn btn-danger" id="deleteBtn"><i class="bi bi-trash me-1"></i>Cancel booking</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- ============ Footer built with utility classes only (Practical 22) ============ -->
+<footer class="site-footer text-white pt-5 pb-4 mt-auto" data-bs-theme="dark">
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-lg-4">
+        <div class="d-flex align-items-center gap-2 fs-4 mb-3"><span class="brand-mark"><i class="bi bi-water"></i></span><span class="navbar-brand m-0">Bluetide</span></div>
+        <p class="text-white-50 mb-3 pe-lg-5">A 42-room hotel on Devka Beach, Daman. Quiet rooms, an infinity pool and a kitchen that cooks the day's catch.</p>
+        <div class="d-flex gap-2">
+          <a class="btn btn-outline-light btn-sm rounded-circle" href="contact.html" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a class="btn btn-outline-light btn-sm rounded-circle" href="contact.html" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a class="btn btn-outline-light btn-sm rounded-circle" href="contact.html" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h6 class="text-uppercase small fw-bold mb-3">Stay</h6>
+        <ul class="list-unstyled d-grid gap-2 mb-0">
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="rooms.html">Rooms</a></li>
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="booking.html">Book a room</a></li>
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="my-bookings.html">My bookings</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h6 class="text-uppercase small fw-bold mb-3">Hotel</h6>
+        <ul class="list-unstyled d-grid gap-2 mb-0">
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="gallery.html">Gallery</a></li>
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="about.html">About</a></li>
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4">
+        <h6 class="text-uppercase small fw-bold mb-3">Front desk, open 24 hours</h6>
+        <ul class="list-unstyled d-grid gap-2 text-white-50 mb-0">
+          <li><i class="bi bi-geo-alt me-2"></i>Devka Beach Road, Nani Daman 396210</li>
+          <li><i class="bi bi-telephone me-2"></i>+91 260 555 0142</li>
+          <li><i class="bi bi-envelope me-2"></i>stay@bluetide.example</li>
+        </ul>
+      </div>
+    </div>
+    <hr class="border-light opacity-25 my-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+      <p class="small text-white-50 mb-0">Bluetide Hotel is a fictional hotel made for an RWPD micro project. Photos from Unsplash.</p>
+      <!-- Drop-up menu with a header (Practical 9) -->
+      <div class="btn-group dropup">
+        <button class="btn btn-outline-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-globe2 me-1"></i><span id="langLabel">English</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><h6 class="dropdown-header">Language</h6></li>
+          <li><button class="dropdown-item" type="button" data-lang="English">English</button></li>
+          <li><button class="dropdown-item" type="button" data-lang="ગુજરાતી">ગુજરાતી</button></li>
+          <li><button class="dropdown-item" type="button" data-lang="हिन्दी">हिन्दी</button></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ Fixed-bottom bar on phones and tablets (Practical 13) ============ -->
+<nav class="bottom-bar fixed-bottom d-lg-none" aria-label="Quick links">
+  <div class="nav nav-justified">
+    <a class="nav-link" href="index.html"><i class="bi bi-house-door"></i>Home</a>
+    <a class="nav-link" href="rooms.html"><i class="bi bi-door-open"></i>Rooms</a>
+    <a class="nav-link" href="booking.html"><i class="bi bi-calendar-plus"></i>Book</a>
+    <a class="nav-link active" aria-current="page" href="my-bookings.html"><i class="bi bi-journal-check"></i>Bookings</a>
+    <a class="nav-link" href="contact.html"><i class="bi bi-telephone"></i>Contact</a>
+  </div>
+</nav>
+
+<!-- ============ Sign-up modal ============ -->
+<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <form class="modal-content" id="signupForm" novalidate>
+      <div class="modal-header">
+        <h2 class="modal-title fs-4" id="signupTitle">Join Bluetide Circle</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="text-body-secondary">Members get early check-in when a room is ready and 10% off at the restaurant.</p>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="signupName" placeholder="Full name" required>
+          <label for="signupName">Full name</label>
+          <div class="invalid-feedback">Enter your name.</div>
+        </div>
+        <div class="form-floating">
+          <input type="email" class="form-control" id="signupEmail" placeholder="name@example.com" required>
+          <label for="signupEmail">Email address</label>
+          <div class="invalid-feedback">Enter a valid email address.</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Not now</button>
+        <button type="submit" class="btn btn-primary">Sign up</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Toast messages appear here -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3 mb-5 mb-lg-0" id="toastBox"></div>
+
+<!-- Bootstrap JS bundle (includes Popper for dropdowns, tooltips and popovers) -->
+<script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/bookings.js"></script>
+</body>
+</html>

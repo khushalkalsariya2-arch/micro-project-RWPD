@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bluetide Hotel</title>
+<meta name="description" content="Bluetide Hotel, Devka Beach, Daman. Choose a room, reserve it and get a confirmation.">
+<!-- Bootstrap 5.3 + our theme, compiled from scss/main.scss (Practicals 1, 23, 24) -->
+<link rel="stylesheet" href="assets/css/main.css">
+<!-- Bootstrap Icons (the Bootstrap 5 replacement for Glyphicons) -->
+<link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.min.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<!-- ============ Fixed-top navbar: logo, menu, dropdown, search, sign-up (Practical 13) ============ -->
+<nav class="navbar navbar-expand-xl fixed-top" aria-label="Main navigation">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+      <span class="brand-mark"><i class="bi bi-water"></i></span>Bluetide
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav me-auto ms-xl-3 mb-2 mb-xl-0">
+        <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="rooms.html">Rooms</a></li>
+        <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Bookings</a>
+          <ul class="dropdown-menu">
+            <li><h6 class="dropdown-header">Reservations</h6></li>
+            <li><a class="dropdown-item" href="booking.html"><i class="bi bi-calendar-plus me-2"></i>Book a room</a></li>
+            <li><a class="dropdown-item" href="my-bookings.html"><i class="bi bi-journal-check me-2"></i>My bookings</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><h6 class="dropdown-header">Help</h6></li>
+            <li><a class="dropdown-item" href="about.html#faq"><i class="bi bi-question-circle me-2"></i>Questions and answers</a></li>
+            <li><a class="dropdown-item" href="contact.html"><i class="bi bi-headset me-2"></i>Front desk</a></li>
+          </ul>
+        </li>
+      </ul>
+      <form class="nav-search mb-2 mb-xl-0 me-xl-2" id="navSearch" role="search">
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-search"></i></span>
+          <input class="form-control" type="search" id="navSearchInput" placeholder="Search rooms" aria-label="Search rooms">
+        </div>
+      </form>
+      <div class="d-flex gap-2 pb-2 pb-xl-0">
+        <button class="btn btn-outline-secondary" type="button" id="themeToggle" aria-label="Switch to dark theme"><i class="bi bi-moon-stars"></i></button>
+        <button class="btn btn-outline-primary text-nowrap" type="button" data-bs-toggle="modal" data-bs-target="#signupModal">Sign up</button>
+        <a class="btn btn-primary text-nowrap" href="booking.html">Book now</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main id="page">
+<script>
+  // Page transition (Practical 18): fade the page in with Bootstrap's .fade / .show classes
+  (function () {
+    var p = document.getElementById("page");
+    p.classList.add("fade");
+    setTimeout(function () { p.classList.add("show"); }, 40);
+  })();
+</script>
+
+<!-- ============ Hero with booking search (Practical 14: jumbotron / page header) ============ -->
+<section class="hero hero-home">
+  <div class="container py-5">
+    <div class="row align-items-center gy-5 py-lg-5">
+      <div class="col-lg-6">
+        <p class="eyebrow text-white opacity-75 mb-3">Devka Beach &middot; Daman</p>
+        <h1 class="display-3 mb-3">Wake up to the Arabian Sea.</h1>
+        <p class="lead opacity-75 mb-4">Bluetide is a 42-room hotel a short walk from the beach. Pick your dates, choose a room and get a confirmed reservation in three steps.</p>
+        <div class="d-flex flex-wrap gap-2 mb-4">
+          <a class="btn btn-light btn-lg" href="rooms.html">Browse rooms</a>
+          <a class="btn btn-outline-light btn-lg" href="gallery.html">See the hotel</a>
+        </div>
+        <ul class="list-inline small opacity-75 mb-0">
+          <li class="list-inline-item me-3"><i class="bi bi-star-fill text-warning me-1"></i>4.7 from 1,280 guests</li>
+          <li class="list-inline-item me-3"><i class="bi bi-clock me-1"></i>Check-in 2 PM</li>
+          <li class="list-inline-item"><i class="bi bi-shield-check me-1"></i>Free cancellation</li>
+        </ul>
+      </div>
+
+      <!-- Offset column pushes the search card to the right (Practical 4) -->
+      <div class="col-lg-5 offset-lg-1">
+        <form class="search-card p-4" id="searchForm" novalidate>
+          <h2 class="h4 mb-3">Check availability</h2>
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label class="form-label small fw-semibold" for="searchIn">Check-in</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                <input type="date" class="form-control" id="searchIn" required>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label small fw-semibold" for="searchOut">Check-out</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-calendar-check"></i></span>
+                <input type="date" class="form-control" id="searchOut" required>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label small fw-semibold" for="searchGuests">Guests</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-people"></i></span>
+                <select class="form-select" id="searchGuests">
+                  <option value="1">1 guest</option>
+                  <option value="2" selected>2 guests</option>
+                  <option value="3">3 guests</option>
+                  <option value="4">4 guests</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label small fw-semibold" for="searchType">Room type</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-door-open"></i></span>
+                <select class="form-select" id="searchType">
+                  <option value="all" selected>Any type</option>
+                  <option value="single">Single</option>
+                  <option value="double">Double</option>
+                  <option value="family">Family</option>
+                  <option value="suite">Suite</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="text-danger small mb-2" id="searchError" hidden>Check-out must be after check-in.</div>
+              <button class="btn btn-primary btn-lg w-100" type="submit">Show available rooms</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Offer alert. Closing it shows a message (Practical 17) ============ -->
+<div class="container mt-4">
+  <div class="alert alert-primary alert-dismissible fade show d-flex align-items-center gap-3 mb-0" role="alert" id="offerAlert">
+    <i class="bi bi-tag-fill fs-4"></i>
+    <div><strong>Monsoon offer.</strong> Take 15% off the room rate with the code <span class="badge text-bg-primary">TIDE15</span> on the booking page.</div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+</div>
+
+<!-- ============ Featured rooms: cards with image thumbnails and badges (Practical 14) ============ -->
+<section class="section">
+  <div class="container">
+    <!-- Hotel name and heading centred with Bootstrap's text-center (Practical 2) -->
+    <div class="text-center mx-auto mb-5" style="max-width: 40rem;">
+      <p class="eyebrow mb-2">Rooms</p>
+      <h2 class="display-6 mb-3">Three rooms guests book most</h2>
+      <p class="text-body-secondary mb-0">Every room has air conditioning, free Wi-Fi, a rain shower and daily housekeeping.</p>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <div class="col">
+        <article class="card room-card h-100">
+          <div class="position-relative">
+            <img class="room-photo" src="assets/img/room-deluxe.jpg" alt="Deluxe Double room with a queen bed">
+            <div class="photo-badges"><span class="badge text-bg-primary">Popular</span></div>
+          </div>
+          <div class="card-body d-flex flex-column">
+            <h3 class="h5 mb-1">Deluxe Double</h3>
+            <p class="small text-body-secondary mb-3">26 m&sup2; &middot; 1 queen bed &middot; 2 guests</p>
+            <div class="mt-auto d-flex justify-content-between align-items-end">
+              <div><span class="h4 price mb-0">&#8377;4,800</span><span class="small text-body-secondary"> / night</span></div>
+              <button class="btn btn-primary btn-sm" type="button" data-select-room="deluxe">Select room</button>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="col">
+        <article class="card room-card h-100">
+          <div class="position-relative">
+            <img class="room-photo" src="assets/img/room-executive.jpg" alt="Executive King room with dark panelling">
+            <div class="photo-badges"><span class="badge text-bg-dark">Business</span></div>
+          </div>
+          <div class="card-body d-flex flex-column">
+            <h3 class="h5 mb-1">Executive King</h3>
+            <p class="small text-body-secondary mb-3">34 m&sup2; &middot; 1 king bed &middot; 2 guests</p>
+            <div class="mt-auto d-flex justify-content-between align-items-end">
+              <div><span class="h4 price mb-0">&#8377;6,900</span><span class="small text-body-secondary"> / night</span></div>
+              <button class="btn btn-primary btn-sm" type="button" data-select-room="executive">Select room</button>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="col">
+        <article class="card room-card h-100">
+          <div class="position-relative">
+            <img class="room-photo" src="assets/img/room-suite.jpg" alt="Sea View Suite with a balcony facing the sea">
+            <div class="photo-badges"><span class="badge text-bg-info">Sea view</span><span class="badge text-bg-danger">Only 1 left</span></div>
+          </div>
+          <div class="card-body d-flex flex-column">
+            <h3 class="h5 mb-1">Sea View Suite</h3>
+            <p class="small text-body-secondary mb-3">58 m&sup2; &middot; 1 king bed &middot; 3 guests</p>
+            <div class="mt-auto d-flex justify-content-between align-items-end">
+              <div><span class="h4 price mb-0">&#8377;11,500</span><span class="small text-body-secondary"> / night</span></div>
+              <button class="btn btn-primary btn-sm" type="button" data-select-room="suite">Select room</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="text-center mt-5">
+      <a class="btn btn-outline-primary" href="rooms.html">View all 8 room types <i class="bi bi-arrow-right ms-1"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Tonight's availability: progress bars (Practical 15 a, b, c, d) ============ -->
+<section class="section bg-body-tertiary border-top border-bottom">
+  <div class="container">
+    <div class="row gy-5 align-items-center">
+      <div class="col-lg-5">
+        <p class="eyebrow mb-2">Live availability</p>
+        <h2 class="display-6 mb-3">How full we are tonight</h2>
+        <p class="text-body-secondary mb-4">Each bar shows the share of rooms already booked. Press the button to fetch the latest numbers from the front desk.</p>
+        <button class="btn btn-primary" type="button" id="refreshBtn"><i class="bi bi-arrow-repeat me-1"></i>Refresh availability</button>
+        <p class="small text-body-secondary mt-3 mb-0" id="refreshNote">Updated just now.</p>
+      </div>
+      <div class="col-lg-6 offset-lg-1">
+        <div class="d-grid gap-4">
+          <!-- (a) + (b) plain bar with a label -->
+          <div>
+            <div class="d-flex justify-content-between small fw-semibold mb-2"><span>Single rooms</span><span class="tabular" data-left="single">6 of 12 left</span></div>
+            <div class="progress" role="progressbar" aria-label="Single rooms booked" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" style="height: 1.25rem;">
+              <div class="progress-bar" data-bar="single" style="width: 50%;">50%</div>
+            </div>
+          </div>
+          <!-- (c) striped bar -->
+          <div>
+            <div class="d-flex justify-content-between small fw-semibold mb-2"><span>Double rooms</span><span class="tabular" data-left="double">7 of 20 left</span></div>
+            <div class="progress" role="progressbar" aria-label="Double rooms booked" aria-valuemin="0" aria-valuemax="100" aria-valuenow="65" style="height: 1.25rem;">
+              <div class="progress-bar progress-bar-striped bg-info" data-bar="double" style="width: 65%;">65%</div>
+            </div>
+          </div>
+          <!-- (c) striped and animated bar -->
+          <div>
+            <div class="d-flex justify-content-between small fw-semibold mb-2"><span>Family studios</span><span class="tabular" data-left="family">2 of 6 left</span></div>
+            <div class="progress" role="progressbar" aria-label="Family studios booked" aria-valuemin="0" aria-valuemax="100" aria-valuenow="67" style="height: 1.25rem;">
+              <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" data-bar="family" style="width: 67%;">67%</div>
+            </div>
+          </div>
+          <div>
+            <div class="d-flex justify-content-between small fw-semibold mb-2"><span>Suites</span><span class="tabular" data-left="suite">1 of 4 left</span></div>
+            <div class="progress" role="progressbar" aria-label="Suites booked" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75" style="height: 1.25rem;">
+              <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" data-bar="suite" style="width: 75%;">75%</div>
+            </div>
+          </div>
+          <!-- (c) multi-colour stacked bar for the whole hotel -->
+          <div>
+            <div class="d-flex justify-content-between small fw-semibold mb-2"><span>Whole hotel, 42 rooms</span><span class="tabular" id="hotelLeft">16 rooms free</span></div>
+            <div class="progress-stacked" style="height: 1.25rem;">
+              <div class="progress" role="progressbar" aria-label="Checked in" id="stackIn" style="width: 43%; height: 1.25rem;"><div class="progress-bar bg-primary">Checked in</div></div>
+              <div class="progress" role="progressbar" aria-label="Arriving today" id="stackArr" style="width: 19%; height: 1.25rem;"><div class="progress-bar bg-success">Arriving</div></div>
+              <div class="progress" role="progressbar" aria-label="Free" id="stackFree" style="width: 38%; height: 1.25rem;"><div class="progress-bar bg-secondary bg-opacity-50">Free</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ What is included: Bootstrap Icons in a responsive grid ============ -->
+<section class="section">
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-lg-4">
+        <p class="eyebrow mb-2">Included in every stay</p>
+        <h2 class="display-6 mb-3">The basics, done properly</h2>
+        <p class="text-body-secondary">No resort fee and no surprise charges. What you see on the booking page is what you pay at the desk.</p>
+      </div>
+      <div class="col-lg-8">
+        <div class="row row-cols-1 row-cols-sm-2 g-4">
+          <div class="col d-flex gap-3"><span class="icon-tile flex-shrink-0"><i class="bi bi-water"></i></span><div><h3 class="h6 mb-1">Infinity pool</h3><p class="small text-body-secondary mb-0">Open 6 AM to 9 PM, with towels at the deck.</p></div></div>
+          <div class="col d-flex gap-3"><span class="icon-tile flex-shrink-0"><i class="bi bi-wifi"></i></span><div><h3 class="h6 mb-1">Free Wi-Fi</h3><p class="small text-body-secondary mb-0">100 Mbps in rooms, the lobby and by the pool.</p></div></div>
+          <div class="col d-flex gap-3"><span class="icon-tile flex-shrink-0"><i class="bi bi-cup-hot"></i></span><div><h3 class="h6 mb-1">Breakfast from 7 AM</h3><p class="small text-body-secondary mb-0">Gujarati and continental buffet, &#8377;450 a guest.</p></div></div>
+          <div class="col d-flex gap-3"><span class="icon-tile flex-shrink-0"><i class="bi bi-car-front"></i></span><div><h3 class="h6 mb-1">Airport and station pickup</h3><p class="small text-body-secondary mb-0">From Surat airport or Vapi station, on request.</p></div></div>
+          <div class="col d-flex gap-3"><span class="icon-tile flex-shrink-0"><i class="bi bi-p-circle"></i></span><div><h3 class="h6 mb-1">Free parking</h3><p class="small text-body-secondary mb-0">Covered parking for 30 cars with a guard on duty.</p></div></div>
+          <div class="col d-flex gap-3"><span class="icon-tile flex-shrink-0"><i class="bi bi-headset"></i></span><div><h3 class="h6 mb-1">Front desk, 24 hours</h3><p class="small text-body-secondary mb-0">Dial 0 from your room at any time.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Guest reviews: media objects with a nested reply (Practical 16) ============ -->
+<section class="section bg-body-tertiary border-top">
+  <div class="container">
+    <div class="row gy-5">
+      <div class="col-lg-4">
+        <p class="eyebrow mb-2">Guest reviews</p>
+        <h2 class="display-6 mb-3">What guests said last month</h2>
+        <div class="d-flex align-items-baseline gap-2">
+          <span class="display-5 price">4.7</span><span class="text-body-secondary">out of 5</span>
+        </div>
+        <div class="text-warning fs-5" aria-label="4.7 out of 5 stars">
+          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="d-grid gap-4">
+          <div class="d-flex gap-3">
+            <span class="avatar">RS</span>
+            <div class="flex-grow-1">
+              <h3 class="h6 mb-0">Riya Shah <span class="badge bg-body-secondary text-body fw-normal ms-1">Deluxe Double</span></h3>
+              <p class="small text-body-secondary mb-2">Stayed 3 nights &middot; from Surat</p>
+              <p class="mb-3">Booked on my phone in two minutes and the room was ready when we arrived. The pool at sunrise is the reason to come.</p>
+              <!-- nested media object: the hotel's reply -->
+              <div class="d-flex gap-3 p-3 bg-body rounded border">
+                <span class="avatar avatar-sm"><i class="bi bi-water"></i></span>
+                <div>
+                  <h4 class="h6 mb-1">Reply from Bluetide</h4>
+                  <p class="small mb-0">Thank you, Riya. We have noted your request for a higher floor next time.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex gap-3">
+            <span class="avatar">KM</span>
+            <div class="flex-grow-1">
+              <h3 class="h6 mb-0">Karan Mehta <span class="badge bg-body-secondary text-body fw-normal ms-1">Executive King</span></h3>
+              <p class="small text-body-secondary mb-2">Stayed 1 night &middot; from Mumbai</p>
+              <p class="mb-0">Quiet room, fast Wi-Fi and a proper desk. I cancelled one night from the bookings page and the refund note came straight away.</p>
+            </div>
+          </div>
+          <div class="d-flex gap-3">
+            <span class="avatar">AP</span>
+            <div class="flex-grow-1">
+              <h3 class="h6 mb-0">Anjali Patel <span class="badge bg-body-secondary text-body fw-normal ms-1">Family Studio</span></h3>
+              <p class="small text-body-secondary mb-2">Stayed 4 nights &middot; from Vadodara</p>
+              <p class="mb-0">The studio fit the four of us easily and the pantry saved us with two small children. Breakfast could start a little earlier.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Closing call to action ============ -->
+<section class="section">
+  <div class="container">
+    <div class="p-4 p-lg-5 bg-primary text-white rounded-4 d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-4">
+      <div>
+        <h2 class="display-6 mb-2">Ready when you are.</h2>
+        <p class="mb-0 opacity-75">Reserve now and pay at the hotel. Cancel free up to 24 hours before check-in.</p>
+      </div>
+      <a class="btn btn-light btn-lg flex-shrink-0" href="booking.html">Book a room</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ Footer built with utility classes only (Practical 22) ============ -->
+<footer class="site-footer text-white pt-5 pb-4 mt-auto" data-bs-theme="dark">
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-lg-4">
+        <div class="d-flex align-items-center gap-2 fs-4 mb-3"><span class="brand-mark"><i class="bi bi-water"></i></span><span class="navbar-brand m-0">Bluetide</span></div>
+        <p class="text-white-50 mb-3 pe-lg-5">A 42-room hotel on Devka Beach, Daman. Quiet rooms, an infinity pool and a kitchen that cooks the day's catch.</p>
+        <div class="d-flex gap-2">
+          <a class="btn btn-outline-light btn-sm rounded-circle" href="contact.html" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a class="btn btn-outline-light btn-sm rounded-circle" href="contact.html" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a class="btn btn-outline-light btn-sm rounded-circle" href="contact.html" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h6 class="text-uppercase small fw-bold mb-3">Stay</h6>
+        <ul class="list-unstyled d-grid gap-2 mb-0">
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="rooms.html">Rooms</a></li>
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="booking.html">Book a room</a></li>
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="my-bookings.html">My bookings</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h6 class="text-uppercase small fw-bold mb-3">Hotel</h6>
+        <ul class="list-unstyled d-grid gap-2 mb-0">
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="gallery.html">Gallery</a></li>
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="about.html">About</a></li>
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4">
+        <h6 class="text-uppercase small fw-bold mb-3">Front desk, open 24 hours</h6>
+        <ul class="list-unstyled d-grid gap-2 text-white-50 mb-0">
+          <li><i class="bi bi-geo-alt me-2"></i>Devka Beach Road, Nani Daman 396210</li>
+          <li><i class="bi bi-telephone me-2"></i>+91 260 555 0142</li>
+          <li><i class="bi bi-envelope me-2"></i>stay@bluetide.example</li>
+        </ul>
+      </div>
+    </div>
+    <hr class="border-light opacity-25 my-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+      <p class="small text-white-50 mb-0">Bluetide Hotel is a fictional hotel made for an RWPD micro project. Photos from Unsplash.</p>
+      <!-- Drop-up menu with a header (Practical 9) -->
+      <div class="btn-group dropup">
+        <button class="btn btn-outline-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-globe2 me-1"></i><span id="langLabel">English</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><h6 class="dropdown-header">Language</h6></li>
+          <li><button class="dropdown-item" type="button" data-lang="English">English</button></li>
+          <li><button class="dropdown-item" type="button" data-lang="ગુજરાતી">ગુજરાતી</button></li>
+          <li><button class="dropdown-item" type="button" data-lang="हिन्दी">हिन्दी</button></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ Fixed-bottom bar on phones and tablets (Practical 13) ============ -->
+<nav class="bottom-bar fixed-bottom d-lg-none" aria-label="Quick links">
+  <div class="nav nav-justified">
+    <a class="nav-link active" aria-current="page" href="index.html"><i class="bi bi-house-door"></i>Home</a>
+    <a class="nav-link" href="rooms.html"><i class="bi bi-door-open"></i>Rooms</a>
+    <a class="nav-link" href="booking.html"><i class="bi bi-calendar-plus"></i>Book</a>
+    <a class="nav-link" href="my-bookings.html"><i class="bi bi-journal-check"></i>Bookings</a>
+    <a class="nav-link" href="contact.html"><i class="bi bi-telephone"></i>Contact</a>
+  </div>
+</nav>
+
+<!-- ============ Sign-up modal ============ -->
+<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <form class="modal-content" id="signupForm" novalidate>
+      <div class="modal-header">
+        <h2 class="modal-title fs-4" id="signupTitle">Join Bluetide Circle</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="text-body-secondary">Members get early check-in when a room is ready and 10% off at the restaurant.</p>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="signupName" placeholder="Full name" required>
+          <label for="signupName">Full name</label>
+          <div class="invalid-feedback">Enter your name.</div>
+        </div>
+        <div class="form-floating">
+          <input type="email" class="form-control" id="signupEmail" placeholder="name@example.com" required>
+          <label for="signupEmail">Email address</label>
+          <div class="invalid-feedback">Enter a valid email address.</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Not now</button>
+        <button type="submit" class="btn btn-primary">Sign up</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Toast messages appear here -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3 mb-5 mb-lg-0" id="toastBox"></div>
+
+<!-- Bootstrap JS bundle (includes Popper for dropdowns, tooltips and popovers) -->
+<script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Contact | Bluetide Hotel</title>
+<meta name="description" content="Contact the front desk, housekeeping or travel desk at Bluetide Hotel.">
+<!-- Bootstrap 5.3 + our theme, compiled from scss/main.scss (Practicals 1, 23, 24) -->
+<link rel="stylesheet" href="assets/css/main.css">
+<!-- Bootstrap Icons (the Bootstrap 5 replacement for Glyphicons) -->
+<link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.min.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<!-- ============ Fixed-top navbar: logo, menu, dropdown, search, sign-up (Practical 13) ============ -->
+<nav class="navbar navbar-expand-xl fixed-top" aria-label="Main navigation">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+      <span class="brand-mark"><i class="bi bi-water"></i></span>Bluetide
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav me-auto ms-xl-3 mb-2 mb-xl-0">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="rooms.html">Rooms</a></li>
+        <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link active" aria-current="page" href="contact.html">Contact</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Bookings</a>
+          <ul class="dropdown-menu">
+            <li><h6 class="dropdown-header">Reservations</h6></li>
+            <li><a class="dropdown-item" href="booking.html"><i class="bi bi-calendar-plus me-2"></i>Book a room</a></li>
+            <li><a class="dropdown-item" href="my-bookings.html"><i class="bi bi-journal-check me-2"></i>My bookings</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><h6 class="dropdown-header">Help</h6></li>
+            <li><a class="dropdown-item" href="about.html#faq"><i class="bi bi-question-circle me-2"></i>Questions and answers</a></li>
+            <li><a class="dropdown-item" href="contact.html"><i class="bi bi-headset me-2"></i>Front desk</a></li>
+          </ul>
+        </li>
+      </ul>
+      <form class="nav-search mb-2 mb-xl-0 me-xl-2" id="navSearch" role="search">
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-search"></i></span>
+          <input class="form-control" type="search" id="navSearchInput" placeholder="Search rooms" aria-label="Search rooms">
+        </div>
+      </form>
+      <div class="d-flex gap-2 pb-2 pb-xl-0">
+        <button class="btn btn-outline-secondary" type="button" id="themeToggle" aria-label="Switch to dark theme"><i class="bi bi-moon-stars"></i></button>
+        <button class="btn btn-outline-primary text-nowrap" type="button" data-bs-toggle="modal" data-bs-target="#signupModal">Sign up</button>
+        <a class="btn btn-primary text-nowrap" href="booking.html">Book now</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main id="page">
+<script>
+  // Page transition (Practical 18): fade the page in with Bootstrap's .fade / .show classes
+  (function () {
+    var p = document.getElementById("page");
+    p.classList.add("fade");
+    setTimeout(function () { p.classList.add("show"); }, 40);
+  })();
+</script>
+
+<header class="page-header py-4 py-lg-5">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb small mb-3">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Contact</li>
+      </ol>
+    </nav>
+    <h1 class="display-5 mb-2">Contact us</h1>
+    <p class="lead text-body-secondary mb-0">Three desks, one phone number. Tell us what you need and the right team will pick it up.</p>
+  </div>
+</header>
+
+<section class="py-4 py-lg-5">
+  <div class="container">
+
+    <!-- ============ Different alert messages. Closing one shows a message (Practical 17) ============ -->
+    <div class="d-grid gap-2 mb-5" id="notices">
+      <div class="alert alert-info alert-dismissible fade show mb-0" role="alert">
+        <i class="bi bi-info-circle me-2"></i><strong>Check-in</strong> is from 2 PM and check-out is by 11 AM.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
+        <i class="bi bi-car-front me-2"></i><strong>Pickups are running on time</strong> from Surat airport and Vapi station today.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      <div class="alert alert-warning alert-dismissible fade show mb-0" role="alert">
+        <i class="bi bi-exclamation-triangle me-2"></i><strong>Pool cleaning:</strong> the pool is closed every Tuesday from 2 to 4 PM.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+        <i class="bi bi-telephone-x me-2"></i><strong>Emergency?</strong> Do not use this form. Dial 9 from your room phone or call the front desk.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+
+    <div class="row g-4 g-lg-5">
+      <!-- ============ Contact form: layout, controls, input groups, buttons (Practicals 8 and 11) ============ -->
+      <div class="col-lg-7">
+        <h2 class="h3 mb-3">Send a message</h2>
+        <div id="contactAlerts"></div>
+        <form id="contactForm" class="row g-3" novalidate>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="cName">Your name</label>
+            <div class="input-group has-validation">
+              <span class="input-group-text"><i class="bi bi-person"></i></span>
+              <input type="text" class="form-control" id="cName" required autocomplete="name">
+              <div class="invalid-feedback">Enter your name.</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="cEmail">Email</label>
+            <div class="input-group has-validation">
+              <span class="input-group-text">@</span>
+              <input type="email" class="form-control" id="cEmail" placeholder="name@example.com" required autocomplete="email">
+              <div class="invalid-feedback">Enter a valid email address.</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="cPhone">Mobile number <span class="fw-normal text-body-secondary">(optional)</span></label>
+            <div class="input-group has-validation">
+              <span class="input-group-text">+91</span>
+              <input type="tel" class="form-control" id="cPhone" pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10-digit number" autocomplete="tel-national">
+              <div class="invalid-feedback">Enter a 10-digit mobile number, or leave this empty.</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="cRef">Booking reference <span class="fw-normal text-body-secondary">(optional)</span></label>
+            <div class="input-group">
+              <span class="input-group-text">#</span>
+              <input type="text" class="form-control text-uppercase" id="cRef" placeholder="BT251009-123" maxlength="16">
+              <a class="btn btn-outline-secondary" href="my-bookings.html" data-bs-toggle="tooltip" data-bs-title="Find it under My bookings"><i class="bi bi-journal-check"></i></a>
+            </div>
+          </div>
+          <div class="col-12">
+            <label class="form-label fw-semibold" for="cDesk">Who should read this?</label>
+            <select class="form-select" id="cDesk" required>
+              <option value="" selected disabled>Choose a desk</option>
+              <option>Front desk</option>
+              <option>Housekeeping desk</option>
+              <option>Travel desk</option>
+            </select>
+            <div class="invalid-feedback">Choose a desk.</div>
+          </div>
+          <div class="col-12">
+            <span class="form-label fw-semibold d-block">How should we reply?</span>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="cReply" id="cReplyEmail" value="email" checked>
+              <label class="form-check-label" for="cReplyEmail">Email</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="cReply" id="cReplyCall" value="call">
+              <label class="form-check-label" for="cReplyCall">Phone call</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="cReply" id="cReplyWa" value="whatsapp">
+              <label class="form-check-label" for="cReplyWa">WhatsApp</label>
+            </div>
+          </div>
+          <div class="col-12">
+            <label class="form-label fw-semibold" for="cMessage">Message</label>
+            <textarea class="form-control" id="cMessage" rows="5" minlength="10" maxlength="500" required placeholder="How can we help?"></textarea>
+            <div class="invalid-feedback">Write at least 10 characters.</div>
+            <div class="form-text text-end tabular" id="cCount">0 / 500</div>
+          </div>
+          <div class="col-12 d-flex flex-wrap gap-2">
+            <button class="btn btn-primary btn-lg" type="submit"><i class="bi bi-send me-1"></i>Send message</button>
+            <button class="btn btn-outline-secondary btn-lg" type="reset">Clear</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- ============ Address card with a list group ============ -->
+      <div class="col-lg-5">
+        <div class="card overflow-hidden">
+          <img src="assets/img/pool-night.jpg" class="card-img-top" alt="The hotel seen from the pool at dusk" style="aspect-ratio: 16 / 8; object-fit: cover;">
+          <div class="card-body pb-2">
+            <h2 class="h5 h-sans mb-0">Bluetide Hotel</h2>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex gap-3"><i class="bi bi-geo-alt text-primary"></i><span>Devka Beach Road, Nani Daman 396210</span></li>
+            <li class="list-group-item d-flex gap-3"><i class="bi bi-telephone text-primary"></i><span class="user-select-all">+91 260 555 0142</span></li>
+            <li class="list-group-item d-flex gap-3"><i class="bi bi-envelope text-primary"></i><span class="user-select-all">stay@bluetide.example</span></li>
+            <li class="list-group-item d-flex gap-3"><i class="bi bi-clock text-primary"></i><span>Front desk open 24 hours, every day</span></li>
+          </ul>
+          <div class="card-body">
+            <a class="btn btn-outline-primary w-100" href="https://www.google.com/maps/search/?api=1&amp;query=Devka+Beach+Daman" target="_blank" rel="noopener"><i class="bi bi-map me-1"></i>Open Devka Beach in Google Maps</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Service desks: cards ("panels") + list groups with badges (Practical 17) ============ -->
+<section class="section bg-body-tertiary border-top">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-lg-7">
+        <p class="eyebrow mb-2">Service desks</p>
+        <h2 class="display-6 mb-0">Who to ask for what</h2>
+      </div>
+    </div>
+    <div class="row row-cols-1 row-cols-lg-3 g-4">
+      <div class="col">
+        <div class="card h-100 border-primary">
+          <div class="card-header text-bg-primary d-flex justify-content-between align-items-center py-3"><span class="fw-bold"><i class="bi bi-bell me-2"></i>Front desk</span><span class="badge text-bg-light">Dial 0</span></div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center">Check-in and check-out<span class="badge text-bg-success rounded-pill">24 hours</span></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Wake-up calls<span class="badge text-bg-success rounded-pill">24 hours</span></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Luggage room<span class="badge text-bg-secondary rounded-pill">Free</span></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Doctor on call<span class="badge text-bg-danger rounded-pill">Urgent</span></li>
+          </ul>
+          <div class="card-footer bg-transparent small text-body-secondary">Open all day, every day</div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100">
+          <div class="card-header d-flex justify-content-between align-items-center py-3"><span class="fw-bold"><i class="bi bi-stars me-2"></i>Housekeeping desk</span><span class="badge text-bg-primary">Dial 4</span></div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center">Room cleaning<span class="badge text-bg-secondary rounded-pill">9 AM to 1 PM</span></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Extra towels and pillows<span class="badge text-bg-secondary rounded-pill">Free</span></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Laundry, same day<span class="badge text-bg-warning rounded-pill">Before 10 AM</span></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Baby cot<span class="badge text-bg-secondary rounded-pill">On request</span></li>
+          </ul>
+          <div class="card-footer bg-transparent small text-body-secondary">Open 7 AM to 10 PM</div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100">
+          <div class="card-header d-flex justify-content-between align-items-center py-3"><span class="fw-bold"><i class="bi bi-compass me-2"></i>Travel desk</span><span class="badge text-bg-primary">Dial 7</span></div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center">Airport and station pickup<span class="badge text-bg-secondary rounded-pill">&#8377;1,200</span></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Daman sightseeing car<span class="badge text-bg-secondary rounded-pill">Half day</span></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Scooter hire<span class="badge text-bg-secondary rounded-pill">Per day</span></li>
+            <li class="list-group-item list-group-item-action disabled d-flex justify-content-between align-items-center" aria-disabled="true">Ferry tickets<span class="badge text-bg-light rounded-pill">Not in monsoon</span></li>
+          </ul>
+          <div class="card-footer bg-transparent small text-body-secondary">Open 8 AM to 8 PM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ Footer built with utility classes only (Practical 22) ============ -->
+<footer class="site-footer text-white pt-5 pb-4 mt-auto" data-bs-theme="dark">
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-lg-4">
+        <div class="d-flex align-items-center gap-2 fs-4 mb-3"><span class="brand-mark"><i class="bi bi-water"></i></span><span class="navbar-brand m-0">Bluetide</span></div>
+        <p class="text-white-50 mb-3 pe-lg-5">A 42-room hotel on Devka Beach, Daman. Quiet rooms, an infinity pool and a kitchen that cooks the day's catch.</p>
+        <div class="d-flex gap-2">
+          <a class="btn btn-outline-light btn-sm rounded-circle" href="contact.html" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a class="btn btn-outline-light btn-sm rounded-circle" href="contact.html" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a class="btn btn-outline-light btn-sm rounded-circle" href="contact.html" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h6 class="text-uppercase small fw-bold mb-3">Stay</h6>
+        <ul class="list-unstyled d-grid gap-2 mb-0">
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="rooms.html">Rooms</a></li>
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="booking.html">Book a room</a></li>
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="my-bookings.html">My bookings</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h6 class="text-uppercase small fw-bold mb-3">Hotel</h6>
+        <ul class="list-unstyled d-grid gap-2 mb-0">
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="gallery.html">Gallery</a></li>
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="about.html">About</a></li>
+          <li><a class="link-light link-opacity-75 link-opacity-100-hover" href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4">
+        <h6 class="text-uppercase small fw-bold mb-3">Front desk, open 24 hours</h6>
+        <ul class="list-unstyled d-grid gap-2 text-white-50 mb-0">
+          <li><i class="bi bi-geo-alt me-2"></i>Devka Beach Road, Nani Daman 396210</li>
+          <li><i class="bi bi-telephone me-2"></i>+91 260 555 0142</li>
+          <li><i class="bi bi-envelope me-2"></i>stay@bluetide.example</li>
+        </ul>
+      </div>
+    </div>
+    <hr class="border-light opacity-25 my-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+      <p class="small text-white-50 mb-0">Bluetide Hotel is a fictional hotel made for an RWPD micro project. Photos from Unsplash.</p>
+      <!-- Drop-up menu with a header (Practical 9) -->
+      <div class="btn-group dropup">
+        <button class="btn btn-outline-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-globe2 me-1"></i><span id="langLabel">English</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><h6 class="dropdown-header">Language</h6></li>
+          <li><button class="dropdown-item" type="button" data-lang="English">English</button></li>
+          <li><button class="dropdown-item" type="button" data-lang="ગુજરાતી">ગુજરાતી</button></li>
+          <li><button class="dropdown-item" type="button" data-lang="हिन्दी">हिन्दी</button></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ Fixed-bottom bar on phones and tablets (Practical 13) ============ -->
+<nav class="bottom-bar fixed-bottom d-lg-none" aria-label="Quick links">
+  <div class="nav nav-justified">
+    <a class="nav-link" href="index.html"><i class="bi bi-house-door"></i>Home</a>
+    <a class="nav-link" href="rooms.html"><i class="bi bi-door-open"></i>Rooms</a>
+    <a class="nav-link" href="booking.html"><i class="bi bi-calendar-plus"></i>Book</a>
+    <a class="nav-link" href="my-bookings.html"><i class="bi bi-journal-check"></i>Bookings</a>
+    <a class="nav-link active" aria-current="page" href="contact.html"><i class="bi bi-telephone"></i>Contact</a>
+  </div>
+</nav>
+
+<!-- ============ Sign-up modal ============ -->
+<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <form class="modal-content" id="signupForm" novalidate>
+      <div class="modal-header">
+        <h2 class="modal-title fs-4" id="signupTitle">Join Bluetide Circle</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="text-body-secondary">Members get early check-in when a room is ready and 10% off at the restaurant.</p>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="signupName" placeholder="Full name" required>
+          <label for="signupName">Full name</label>
+          <div class="invalid-feedback">Enter your name.</div>
+        </div>
+        <div class="form-floating">
+          <input type="email" class="form-control" id="signupEmail" placeholder="name@example.com" required>
+          <label for="signupEmail">Email address</label>
+          <div class="invalid-feedback">Enter a valid email address.</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Not now</button>
+        <button type="submit" class="btn btn-primary">Sign up</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Toast messages appear here -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3 mb-5 mb-lg-0" id="toastBox"></div>
+
+<!-- Bootstrap JS bundle (includes Popper for dropdowns, tooltips and popovers) -->
+<script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/contact.js"></script>
+</body>
+</html>
